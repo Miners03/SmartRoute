@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:16
+    container_name: smartroute_pg
+    environment:
+      POSTGRES_USER: smartroute
+      POSTGRES_PASSWORD: smartroute
+      POSTGRES_DB: smartroute
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smartroute -d smartroute"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg_data:
